@@ -1,6 +1,5 @@
 const express = require('express');
 
-const PORT = 3000;
 const app = express();
 const routes = require('./routes');
 const mongoose = require('mongoose');
@@ -19,5 +18,8 @@ app.use(express.json());
 // Routes
 app.use('/', routes);
 
-app.listen(PORT);
-console.log(`Running on Port ${PORT}`);
+app.use((err, req, res, next) => {
+    res.status(500).json({ message: err.message });
+});
+
+module.exports = app;
